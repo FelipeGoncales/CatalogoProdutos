@@ -38,15 +38,15 @@ adicionarCadastro.addEventListener('click', () => {
     let preco = document.getElementById('preco').value;
 
     if (!nome || !image || !categoria || !preco) {
-        alert('Todos os campos devem ser preenchidos.');
+        exibirMensagem('Todos os campos devem ser preenchidos.', 'error')
         return;
     };
     if (preco <= 0) {
-        alert('Insira um valor válido.');
+        exibirMensagem('Insira um valor válido.', 'error');
         return;
     };
     if (!webImageExtensions.some(extension => image.endsWith(extension))) {
-        alert('Digite um endereço de imagem válido');
+        exibirMensagem('Digite um endereço de imagem válido.', 'error');
         return;
     }
 
@@ -66,6 +66,8 @@ adicionarCadastro.addEventListener('click', () => {
     addProduto(nome, image, categoria, preco);
 
     atualizarMensagemNenhumProduto();
+
+    exibirMensagem('Produto adicionado com sucesso.', 'sucess');
 
     salvarLocalStorage();
 });
@@ -126,9 +128,9 @@ function addProduto(nome, image, categ, preco) {
     iconEdit.addEventListener('click', abrirEditar);
     divIcons.appendChild(iconEdit);
 
-    let iconDelete = document.createElement('i');
-    iconDelete.classList.add('fa-solid', 'fa-trash', 'delete-button');
-    iconDelete.addEventListener('click', deletar);
+    let iconDelete = document.createElement("i");
+    iconDelete.classList.add("fa-solid", "fa-trash", "delete-button");
+    iconDelete.addEventListener("click", deletar);
     divIcons.appendChild(iconDelete);
 
     divProd.appendChild(divIcons);
@@ -136,28 +138,12 @@ function addProduto(nome, image, categ, preco) {
     document.getElementById('produtosList').appendChild(divProd);
 }
 
-function deletar() {
-  let divProd = this.parentNode.parentNode;
-  let catalogoDiv = document.getElementById('produtosList');
-
-  let produtos = Array.from(catalogoDiv.children).filter(el => el.classList.contains('prod'));
-
-  let index = produtos.indexOf(divProd);
-
-  if (index !== -1) {
-      catalogo.splice(index, 1);
-      divProd.remove();
-      atualizarMensagemNenhumProduto();
-      salvarLocalStorage();
-  }
-}
-
-
 function atualizarMensagemNenhumProduto() {
     let noProducts = document.querySelector('.no-products'); 
 
     if (catalogo.length === 0) {
         noProducts.style.display = 'block';
+        noProducts.textContent = 'Nenhum produto encontrado para o termo pesquisado.';
     } else {
         noProducts.style.display = 'none';
     };
@@ -187,7 +173,6 @@ function abrirEditar() {
     }
 }
 
-
 const salvarEdicao = () => {
     let nomeEditar = document.getElementById('nome-editar').value;
     let imageEditar = document.getElementById('image-editar').value;
@@ -195,15 +180,15 @@ const salvarEdicao = () => {
     let precoEditar = document.getElementById('preco-editar').value;
 
     if (!nomeEditar || !imageEditar || !categoriaEditar || !precoEditar) {
-        alert('Todos os campos devem ser preenchidos.');
+        exibirMensagem('Todos os campos devem ser preenchidos.', 'error');
         return;
     }
     if (precoEditar <= 0) {
-        alert('Insira um valor válido.');
+        exibirMensagem('Insira um valor válido.', 'error');
         return;
     }
     if (!webImageExtensions.some(extension => imageEditar.endsWith(extension))) {
-        alert('Digite um endereço de imagem válido');
+        exibirMensagem('Digite um endereço de imagem válido.', 'error');
         return;
     }
 
@@ -234,9 +219,11 @@ const salvarEdicao = () => {
 
         salvarLocalStorage();
 
+        exibirMensagem('Produto alterado com sucesso.', 'sucess');
+
         modalEditar.style.display = 'none';
     } else {
-        alert('Erro ao localizar o produto para edição.');
+        exibirMensagem('Erro ao localizar o produto para edição.', 'error');
     }
 };
 
@@ -291,3 +278,64 @@ searchInput.addEventListener("input", () => {
 
     noProducts.style.display = produtosVisiveis ? "none" : "block";
 });
+
+let produtoParaDeletar = null;
+
+function deletar() {
+    let divProd = this.parentNode.parentNode;
+    produtoParaDeletar = divProd;
+
+    const modalDeletar = document.getElementById("modalDeletar");
+    modalDeletar.style.display = "flex"; // Mostrar o modal
+}
+
+const modalDeletar = document.getElementById("modalDeletar");
+const deleteSim = document.getElementById("deleteSim");
+const deleteNao = document.getElementById("deleteNao");
+
+deleteSim.addEventListener("click", () => {
+    if (produtoParaDeletar) {
+        let catalogoDiv = document.getElementById("produtosList");
+
+        let produtos = Array.from(catalogoDiv.children).filter(el => el.classList.contains("prod"));
+
+        let index = produtos.indexOf(produtoParaDeletar);
+
+        if (index !== -1) {
+            catalogo.splice(index, 1);
+            produtoParaDeletar.remove();
+            atualizarMensagemNenhumProduto();
+            salvarLocalStorage();
+        }
+    }
+    exibirMensagem('Produto deletado com sucesso.', 'sucess');
+    produtoParaDeletar = null;
+    modalDeletar.style.display = "none";
+});
+
+deleteNao.addEventListener("click", () => {
+    produtoParaDeletar = null;
+    modalDeletar.style.display = "none";
+});
+
+let mensagemEmExibicao = false;
+
+function exibirMensagem(texto, tipo) {
+    if (mensagemEmExibicao) return;
+
+    mensagemEmExibicao = true;
+
+    let pMensagem = document.getElementById('mensagemUsuario');
+    pMensagem.textContent = texto;
+    pMensagem.style.display = 'block';
+    if (tipo === 'error') {
+        pMensagem.style.backgroundColor = '#fa3f3c';
+    } else if (tipo === 'sucess') {
+        pMensagem.style.backgroundColor = '#42e3a2';
+    };
+
+    setTimeout(() => {
+        pMensagem.style.display = 'none';
+        mensagemEmExibicao = false;
+    }, 4900);
+}
