@@ -116,22 +116,21 @@ function addProduto(nome, image, categ, preco) {
 }
 
 function deletar() {
-    let divPai = this.parentNode;
-    let divProd = divPai.parentNode;
-    let catalogoDiv = document.getElementById('produtosList');
+  let divProd = this.parentNode.parentNode;
+  let catalogoDiv = document.getElementById('produtosList');
 
-    let index = Array.from(catalogoDiv).indexOf(divProd);
+  let produtos = Array.from(catalogoDiv.children).filter(el => el.classList.contains('prod'));
 
-    if (catalogo.splice(index, 1)) {
-        alert('deu bom')
-    }
+  let index = produtos.indexOf(divProd);
 
-    divProd.remove();
-
-    atualizarMensagemNenhumProduto();
-
-    salvarLocalStorage();
+  if (index !== -1) {
+      catalogo.splice(index, 1);
+      divProd.remove();
+      atualizarMensagemNenhumProduto();
+      salvarLocalStorage();
+  }
 }
+
 
 
 function atualizarMensagemNenhumProduto() {
