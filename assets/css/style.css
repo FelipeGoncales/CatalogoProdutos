@@ -1,0 +1,79 @@
+@import url(https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
+    font-size: 20px;
+}
+
+:root {
+    --cor-princ: #FF4733;
+    --cor-texto: #FFFFFF;
+    --cinza: #D3D3D3;
+    --cinza-hover: #FFFFFF;
+}
+
+header {
+    background-color: var(--cor-princ);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.div-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    & img {
+        width: 70px;
+        height: auto;
+    }
+    & p {
+        font-size: 1.3rem;
+        color: var(--cor-texto);
+    }
+}
+
+.div-input {
+    width: 30vw;
+    position: relative;
+    & input {
+        width: 100%;
+        border: none;
+        border-radius: 100px;
+        padding: 10px;
+        padding-right: 15px;
+        outline: none;
+        font-size: 0.9rem;
+        text-align: right;
+    }
+    & i {
+        position: absolute;
+        color: var(--cinza);
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.3rem;
+        left: 15px;
+    }
+}
+
+.add-prod-button {
+    background-color: var(--cor-texto);
+    color: var(--cor-princ);
+    padding: 15px;
+    border-radius: 10px;
+    line-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    &:hover {
+        background-color: var(--cinza-hover);
+    }
+}
