@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
         for (item of catalogoDesc) {
             addProduto(item.nome, item.image, item.categoria, item.preco);
         }
+
+        let noProducts = document.querySelector('.no-products')
+        if (catalogoDesc.length > 0) {
+            noProducts.style.display = 'none';
+        }
     }
 });
 
@@ -37,11 +42,10 @@ adicionarCadastro.addEventListener('click', () => {
 
     addProduto(nome, image, categoria, preco);
 
-    let noProducts = document.querySelector('no-products')
+    let noProducts = document.querySelector('.no-products')
     if (noProducts) {
         noProducts.style.display = 'none'; 
     }
-
     salvarLocalStorage();
 });
 
@@ -123,6 +127,11 @@ function deletar() {
 
     divProd.remove();
 
+    let noProducts = document.querySelector('.no-products')
+    if (Array.from(catalogoDiv).length === 0) {
+        noProducts.style.display = 'block'; 
+    };
+
     salvarLocalStorage();
 }
 
@@ -132,7 +141,7 @@ let openModalCadastro = document.getElementById("openModalCadastro");
 let closeCadastro = document.getElementsByClassName("closeCadastro")[0];
 
 openModalCadastro.onclick = function() {
-  modalCadastro.style.display = "block";
+  modalCadastro.style.display = "flex";
 }
 
 closeCadastro.onclick = function() {

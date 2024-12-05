@@ -271,8 +271,10 @@ border-radius: 2px;
 
 .modalCadastro {
     display: none;
+    align-items: center;
+    justify-content: center;
     position: fixed; 
-    z-index: 1; 
+    z-index: 99999999; 
     left: 0;
     top: 0;
     width: 100%; 
@@ -284,11 +286,12 @@ border-radius: 2px;
   
 
   .modal-content {
+    display: flex;
+    flex-direction: column;
     background-color: #fefefe;
-    margin: 15% auto;
     padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
+    width: 400px;
+    gap: 20px;
   }
   
   
