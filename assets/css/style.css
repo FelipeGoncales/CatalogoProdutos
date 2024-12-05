@@ -202,15 +202,12 @@ h1 {
     }
 }
 
-/* Início do rodapé */
-.div-footer-img {
-    margin: 0;
-    padding: 0;
-}
-& .footer-img {
+.footer-img {
     width: 100%;
     height: auto;
     display: block;
+    position: absolute;
+    bottom: 100%;
 }
 
 footer {
@@ -220,6 +217,7 @@ footer {
     display: flex;
     justify-content: space-around;
     margin-top: 0;
+    position: relative;
 }
 
 .div-logo-footer {
