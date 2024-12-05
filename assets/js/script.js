@@ -202,7 +202,7 @@ const salvarEdicao = () => {
         alert('Insira um valor válido.');
         return;
     }
-    if (!webImageExtensions.some(extension => image.endsWith(extension))) {
+    if (!webImageExtensions.some(extension => imageEditar.endsWith(extension))) {
         alert('Digite um endereço de imagem válido');
         return;
     }
