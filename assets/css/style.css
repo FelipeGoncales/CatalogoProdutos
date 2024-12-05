@@ -36,11 +36,13 @@ header {
 
 .no-products {
     color: rgba(0,0,0, 0.3);
+    text-align: center;
+    max-width: 90vw;
 }
 
 #mensagemUsuario {
     position: fixed;
-    bottom: 40px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     color: var(--cinza-hover);
@@ -443,11 +445,15 @@ border-radius: 2px;
             scale: 0.7;
         }
     }
-    & input {
-        text-align: left;
-        padding-left: 50px;
-        font-size: 0.6rem;
+    .div-input {
+        width: 200px;
+        input {
+            text-align: left;
+            padding-left: 50px;
+            font-size: 0.6rem;
+        }
     }
+        
     .add-prod-button {
         font-size: 0.65rem;
         margin-top: 15px;

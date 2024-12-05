@@ -98,19 +98,18 @@ function addProduto(nome, image, categ, preco) {
     let pPreco = document.createElement('p');
     pPreco.classList.add('preco');
 
-    let valorInteiro = parseInt(preco);
+    let precoInteiro = Math.round(preco * 100);
+    let valorInteiro = Math.floor(precoInteiro / 100);
+    let centavos = precoInteiro % 100;
 
-    let centavos = parseInt(((preco - valorInteiro)*100));
-
-    
-    if (centavos < 10 && centavos != 0) {
-        centavos = '0'+String(centavos);
-    };
+    if (centavos < 10) {
+        centavos = '0' + centavos;
+    }
     if (centavos == 0) {
         centavos = '00';
     };
 
-    pPreco.textContent = 'R$'+valorInteiro+','+centavos;
+    pPreco.textContent = 'R$' + valorInteiro + ',' + centavos;
     divTextos.appendChild(pPreco);
 
     let pCategoria = document.createElement('p');
@@ -211,11 +210,15 @@ const salvarEdicao = () => {
         produtoDOM.querySelector('.div-img').style.backgroundImage = `url(${imageEditar})`;
         produtoDOM.querySelector('.categoria').textContent = categoriaEditar;
 
-        let valorInteiro = parseInt(precoEditar);
-        let centavos = parseInt(((precoEditar - valorInteiro) * 100));
-        if (centavos < 10 && centavos != 0) centavos = '0' + String(centavos);
-        if (centavos == 0) centavos = '00';
+        let precoInteiro = Math.round(precoEditar * 100);
+        let valorInteiro = Math.floor(precoInteiro / 100);
+        let centavos = precoInteiro % 100;
+        
+        if (centavos < 10) {
+            centavos = '0' + centavos;
+        }
         produtoDOM.querySelector('.preco').textContent = 'R$' + valorInteiro + ',' + centavos;
+        
 
         salvarLocalStorage();
 
