@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 let catalogo = [];
 
 const adicionarCadastro = document.getElementById("adicionarCadastro");
+
 adicionarCadastro.addEventListener('click', () => {
     let nome = document.getElementById('nome').value;
     let image = document.getElementById('image').value;
@@ -35,6 +36,11 @@ adicionarCadastro.addEventListener('click', () => {
     modalCadastro.style.display = "none";
 
     addProduto(nome, image, categoria, preco);
+
+    let noProducts = document.querySelector('no-products')
+    if (noProducts) {
+        noProducts.style.display = 'none'; 
+    }
 
     salvarLocalStorage();
 });
@@ -94,6 +100,8 @@ function addProduto(nome, image, categ, preco) {
     divProd.appendChild(divIcons);
 
     document.getElementById('produtosList').appendChild(divProd);
+
+    console.log(Array.from(document.getElementById('produtosList')).length);
 }
 
 function deletar() {
@@ -109,7 +117,7 @@ function deletar() {
 
     salvarLocalStorage();
 }
-    
+
 function search() {
   const inputSearch = document.getElementById("inputSeach").value.toLowerCase();
   const searchedList = document.getElementById("searchedList");
