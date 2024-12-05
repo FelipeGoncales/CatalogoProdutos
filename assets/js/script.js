@@ -10,10 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
             addProduto(item.nome, item.image, item.categoria, item.preco);
         }
 
-        let noProducts = document.querySelector('.no-products')
-        if (catalogoDesc.length > 0) {
-            noProducts.style.display = 'none';
-        }
+        atualizarMensagemNenhumProduto()
     }
 });
 
@@ -26,6 +23,11 @@ adicionarCadastro.addEventListener('click', () => {
     let image = document.getElementById('image').value;
     let categoria = document.getElementById('categoria').value;
     let preco = document.getElementById('preco').value;
+
+    if (!nome || !image || !categoria || !preco) {
+        alert('Todos os campos devem ser preenchidos');
+        return;
+    };
 
     let item = {};
     item['nome'] = nome;
@@ -42,10 +44,8 @@ adicionarCadastro.addEventListener('click', () => {
 
     addProduto(nome, image, categoria, preco);
 
-    let noProducts = document.querySelector('.no-products')
-    if (noProducts) {
-        noProducts.style.display = 'none'; 
-    }
+    atualizarMensagemNenhumProduto();
+
     salvarLocalStorage();
 });
 
@@ -120,21 +120,30 @@ function deletar() {
     let divProd = divPai.parentNode;
     let catalogoDiv = document.getElementById('produtosList');
 
-    let produtos = Array.from(catalogoDiv.children)
-    
-    let index = produtos.indexOf(divProd);
+    let index = Array.from(catalogoDiv).indexOf(divProd);
 
-    catalogo.splice(index, 1);
+    if (catalogo.splice(index, 1)) {
+        alert('deu bom')
+    }
 
     divProd.remove();
 
-    let noProducts = document.querySelector('.no-products')
-    if (Array.from(catalogoDiv).length === 0) {
-        noProducts.style.display = 'block'; 
-    };
+    atualizarMensagemNenhumProduto();
 
     salvarLocalStorage();
 }
+
+
+function atualizarMensagemNenhumProduto() {
+    let noProducts = document.querySelector('.no-products'); 
+
+    if (catalogo.length === 0) {
+        noProducts.style.display = 'block';
+    } else {
+        noProducts.style.display = 'none';
+    };
+};
+
 
 function abrirEditar() {
     let divProd = this.parentNode.parentNode;
