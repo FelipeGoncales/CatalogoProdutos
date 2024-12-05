@@ -126,23 +126,6 @@ function deletar() {
     salvarLocalStorage();
 }
 
-function search() {
-  const inputSearch = document.getElementById("inputSeach").value.toLowerCase();
-  const searchedList = document.getElementById("searchedList");
-  
-  // Limpar a lista de resultados anteriores
-  searchedList.innerHTML = "";
-
-  // Filtrar os itens no catálogo
-  const filterItems = catalogo.filter(item => item.nome.toLowerCase().includes(inputSearch));
-  
-  // Adicionar os itens filtrados à lista
-  for (const item of filterItems) {
-    const li = document.createElement('li');
-    li.textContent = item.nome;
-    searchedList.appendChild(li);
-  }
-}
 
 let modalCadastro = document.getElementById("modalCadastro");
 let openModalCadastro = document.getElementById("openModalCadastro");
@@ -156,24 +139,9 @@ closeCadastro.onclick = function() {
   modalCadastro.style.display = "none";
 }
 
-let modalSearch = document.getElementById("modalSearch");
-let openModalSearch = document.getElementById("openModalSearch");
-let closeSearch = document.getElementsByClassName("closeSearch")[0];
-
-openModalSearch.onclick = function() {
-  modalSearch.style.display = "block";
-}
-
-closeSearch.onclick = function() {
-  modalSearch.style.display = "none";
-}
-
 // Corrigir o evento window.onclick para não sobrescrever
 window.onclick = function(event) {
   if (event.target === modalCadastro) {
     modalCadastro.style.display = "none";
-  }
-  if (event.target === modalSearch) {
-    modalSearch.style.display = "none";
   }
 }
