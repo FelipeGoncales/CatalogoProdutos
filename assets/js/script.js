@@ -182,3 +182,26 @@ let closeEditar = document.getElementById("closeEditar");
 closeEditar.addEventListener('click', function() {
     modalEditar.style.display = 'none';
 });
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("input", () => {
+    let query = searchInput.value.toLowerCase();
+    let produtos = document.querySelectorAll(".prod");
+
+    produtos.forEach(produto => {
+        let nome = produto.querySelector(".descricao").textContent.toLowerCase();
+        let categoria = produto.querySelector(".categoria").textContent.toLowerCase();
+
+        if (nome.includes(query) || categoria.includes(query)) {
+            produto.style.display = "flex";
+        } else {
+            produto.style.display = "none";
+        }
+    });
+
+    let noProducts = document.querySelector(".no-products");
+    let produtosVisiveis = Array.from(produtos).some(produto => produto.style.display === "flex");
+
+    noProducts.style.display = produtosVisiveis ? "none" : "block";
+});
