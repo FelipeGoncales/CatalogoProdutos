@@ -1,3 +1,16 @@
+const webImageExtensions = [
+  ".jpg",  // JPEG
+  ".jpeg", // Alternativo para JPEG
+  ".png",  // PNG
+  ".gif",  // GIF
+  ".webp", // WebP
+  ".svg",  // SVG
+  ".bmp",  // BMP
+  ".ico",  // Ícones
+  ".tiff", // TIFF
+  ".avif"  // AVIF
+];
+
 document.addEventListener('DOMContentLoaded', () => {
     let catalogoLocalStorage = localStorage.getItem('catalogo');
 
@@ -32,6 +45,10 @@ adicionarCadastro.addEventListener('click', () => {
         alert('Insira um valor válido.');
         return;
     };
+    if (!webImageExtensions.some(extension => image.endsWith(extension))) {
+        alert('Digite um endereço de imagem válido');
+        return;
+    }
 
     let item = {};
     item['nome'] = nome;
@@ -183,6 +200,10 @@ const salvarEdicao = () => {
     }
     if (precoEditar <= 0) {
         alert('Insira um valor válido.');
+        return;
+    }
+    if (!webImageExtensions.some(extension => image.endsWith(extension))) {
+        alert('Digite um endereço de imagem válido');
         return;
     }
 
