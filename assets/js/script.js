@@ -37,15 +37,15 @@ adicionarCadastro.addEventListener('click', () => {
     addProduto(nome, image, categoria, preco);
 
     salvarLocalStorage();
-    });
+});
 
-    function salvarLocalStorage() {
+function salvarLocalStorage() {
     let catalogoJSON = JSON.stringify(catalogo);
 
     localStorage.setItem('catalogo', catalogoJSON);
-    }
+}
 
-    function addProduto(nome, image, categ, preco) {
+function addProduto(nome, image, categ, preco) {
     let divProd = document.createElement('div');
     divProd.classList.add('prod');
 
@@ -88,6 +88,7 @@ adicionarCadastro.addEventListener('click', () => {
 
     let iconDelete = document.createElement('i');
     iconDelete.classList.add('fa-solid', 'fa-trash', 'delete-button');
+    iconDelete.addEventListener('click', deletar);
     divIcons.appendChild(iconDelete);
 
     divProd.appendChild(divIcons);
@@ -96,11 +97,19 @@ adicionarCadastro.addEventListener('click', () => {
 }
 
 function deletar() {
+    let divPai = this.parentNode;
+    let divProd = divPai.parentNode;
+    let catalogoDiv = divProd.parentNode;
 
+    let index = Array.from(catalogoDiv).indexOf(divProd);
+
+    catalogo.splice(index, 1);
+
+    divProd.remove();
+
+    salvarLocalStorage();
 }
-
-
-
+    
 function search() {
   const inputSearch = document.getElementById("inputSeach").value.toLowerCase();
   const searchedList = document.getElementById("searchedList");
