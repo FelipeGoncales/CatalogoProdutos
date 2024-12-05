@@ -95,8 +95,7 @@ header {
 
 main {
     min-height: 100vh;
-    padding: 70px 0;
-    margin: 50px 0 100px 0;
+    margin: 40px 0 60px 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -353,3 +352,37 @@ border-radius: 2px;
   }
   
   
+@media (max-width: 820px) {
+    header {
+        flex-direction: column;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+    }
+    .div-input {
+        width: 300px;
+        align-items: center;
+        & input {
+            text-align: left;
+            padding-left: 50px;
+        }
+    } 
+    main {
+        margin-top: 200px;
+    }
+    footer {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 50px;
+        & .footer-section {
+            width: 140px;
+        }
+    }
+}
+
+@media (max-width: 330px) {
+    .prod {
+        scale: 0.9;
+    }
+}
