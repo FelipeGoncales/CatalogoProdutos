@@ -25,7 +25,11 @@ adicionarCadastro.addEventListener('click', () => {
     let preco = document.getElementById('preco').value;
 
     if (!nome || !image || !categoria || !preco) {
-        alert('Todos os campos devem ser preenchidos');
+        alert('Todos os campos devem ser preenchidos.');
+        return;
+    };
+    if (preco <= 0) {
+        alert('Insira um valor válido.');
         return;
     };
 
@@ -132,7 +136,6 @@ function deletar() {
 }
 
 
-
 function atualizarMensagemNenhumProduto() {
     let noProducts = document.querySelector('.no-products'); 
 
@@ -143,40 +146,94 @@ function atualizarMensagemNenhumProduto() {
     };
 };
 
-
 function abrirEditar() {
     let divProd = this.parentNode.parentNode;
     let catalogoDiv = document.getElementById('produtosList');
 
-    let produtos = Array.from(catalogoDiv.children);
-
+    let produtos = Array.from(catalogoDiv.children).filter(el => el.classList.contains('prod'));
     let index = produtos.indexOf(divProd);
 
-    let produto = catalogo[index];
+    if (index !== -1) {
+        let produto = catalogo[index];
 
-    let nomeEditar = document.getElementById('nome-editar');
-    let imageEditar = document.getElementById('image-editar');
-    let categoriaEditar = document.getElementById('categoria-editar');
-    let precoEditar = document.getElementById('preco-editar');
+        document.getElementById('nome-editar').value = produto.nome;
+        document.getElementById('image-editar').value = produto.image;
+        document.getElementById('categoria-editar').value = produto.categoria;
+        document.getElementById('preco-editar').value = produto.preco;
 
-    nomeEditar.value = produto.nome;
-    imageEditar.value = produto.image;
-    categoriaEditar.value = produto.categoria;
-    precoEditar.value = produto.preco;
+        const modalEditar = document.getElementById('modalEditar');
+        modalEditar.dataset.index = index; 
 
-    const modalEditar = document.getElementById('modalEditar');
-    modalEditar.style.display = "flex";
+        modalEditar.style.display = "flex";
+    } else {
+        alert("Erro ao localizar o produto para edição.");
+    }
 }
 
 
+const salvarEdicao = () => {
+    let nomeEditar = document.getElementById('nome-editar').value;
+    let imageEditar = document.getElementById('image-editar').value;
+    let categoriaEditar = document.getElementById('categoria-editar').value;
+    let precoEditar = document.getElementById('preco-editar').value;
 
+    if (!nomeEditar || !imageEditar || !categoriaEditar || !precoEditar) {
+        alert('Todos os campos devem ser preenchidos.');
+        return;
+    }
+    if (precoEditar <= 0) {
+        alert('Insira um valor válido.');
+        return;
+    }
+
+    const modalEditar = document.getElementById('modalEditar');
+    let index = modalEditar.dataset.index;
+
+    if (index !== undefined) {
+        index = parseInt(index);
+
+        catalogo[index] = {
+            nome: nomeEditar,
+            image: imageEditar,
+            categoria: categoriaEditar,
+            preco: precoEditar,
+        };
+
+        let catalogoDiv = document.getElementById('produtosList');
+        let produtoDOM = catalogoDiv.children[index+1];
+        produtoDOM.querySelector('.descricao').textContent = nomeEditar;
+        produtoDOM.querySelector('.div-img').style.backgroundImage = `url(${imageEditar})`;
+        produtoDOM.querySelector('.categoria').textContent = categoriaEditar;
+
+        let valorInteiro = parseInt(precoEditar);
+        let centavos = parseInt(((precoEditar - valorInteiro) * 100));
+        if (centavos < 10 && centavos != 0) centavos = '0' + String(centavos);
+        if (centavos == 0) centavos = '00';
+        produtoDOM.querySelector('.preco').textContent = 'R$' + valorInteiro + ',' + centavos;
+
+        salvarLocalStorage();
+
+        modalEditar.style.display = 'none';
+    } else {
+        alert('Erro ao localizar o produto para edição.');
+    }
+};
+
+
+const botaoSalvarEdicao = document.getElementById('editarProduto');
+botaoSalvarEdicao.addEventListener('click', salvarEdicao);
 
 let modalCadastro = document.getElementById("modalCadastro");
 let openModalCadastro = document.getElementById("openModalCadastro");
 let closeCadastro = document.getElementById("closeCadastro");
 
 openModalCadastro.onclick = function() {
-  modalCadastro.style.display = "flex";
+    modalCadastro.style.display = "flex";
+
+    document.getElementById('nome').value = '';
+    document.getElementById('image').value = '';
+    document.getElementById('categoria').value = '';
+    document.getElementById('preco').value = '';
 }
 
 closeCadastro.onclick = function() {
