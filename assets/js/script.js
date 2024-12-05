@@ -102,6 +102,7 @@ function addProduto(nome, image, categ, preco) {
 
     let iconEdit = document.createElement('i');
     iconEdit.classList.add('fa-solid', 'fa-pen', 'edit-button');
+    iconEdit.addEventListener('click', abrirEditar);
     divIcons.appendChild(iconEdit);
 
     let iconDelete = document.createElement('i');
@@ -112,16 +113,16 @@ function addProduto(nome, image, categ, preco) {
     divProd.appendChild(divIcons);
 
     document.getElementById('produtosList').appendChild(divProd);
-
-    console.log(Array.from(document.getElementById('produtosList')).length);
 }
 
 function deletar() {
     let divPai = this.parentNode;
     let divProd = divPai.parentNode;
-    let catalogoDiv = divProd.parentNode;
+    let catalogoDiv = document.getElementById('produtosList');
 
-    let index = Array.from(catalogoDiv).indexOf(divProd);
+    let produtos = Array.from(catalogoDiv.children)
+    
+    let index = produtos.indexOf(divProd);
 
     catalogo.splice(index, 1);
 
@@ -135,10 +136,36 @@ function deletar() {
     salvarLocalStorage();
 }
 
+function abrirEditar() {
+    let divProd = this.parentNode.parentNode;
+    let catalogoDiv = document.getElementById('produtosList');
+
+    let produtos = Array.from(catalogoDiv.children);
+
+    let index = produtos.indexOf(divProd);
+
+    let produto = catalogo[index];
+
+    let nomeEditar = document.getElementById('nome-editar');
+    let imageEditar = document.getElementById('image-editar');
+    let categoriaEditar = document.getElementById('categoria-editar');
+    let precoEditar = document.getElementById('preco-editar');
+
+    nomeEditar.value = produto.nome;
+    imageEditar.value = produto.image;
+    categoriaEditar.value = produto.categoria;
+    precoEditar.value = produto.preco;
+
+    const modalEditar = document.getElementById('modalEditar');
+    modalEditar.style.display = "flex";
+}
+
+
+
 
 let modalCadastro = document.getElementById("modalCadastro");
 let openModalCadastro = document.getElementById("openModalCadastro");
-let closeCadastro = document.getElementsByClassName("closeCadastro")[0];
+let closeCadastro = document.getElementById("closeCadastro");
 
 openModalCadastro.onclick = function() {
   modalCadastro.style.display = "flex";
@@ -148,9 +175,10 @@ closeCadastro.onclick = function() {
   modalCadastro.style.display = "none";
 }
 
-// Corrigir o evento window.onclick para não sobrescrever
-window.onclick = function(event) {
-  if (event.target === modalCadastro) {
-    modalCadastro.style.display = "none";
-  }
-}
+
+const modalEditar = document.getElementById('modalEditar');
+let closeEditar = document.getElementById("closeEditar");
+
+closeEditar.addEventListener('click', function() {
+    modalEditar.style.display = 'none';
+});
