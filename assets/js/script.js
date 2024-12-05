@@ -75,6 +75,14 @@ function addProduto(nome, image, categ, preco) {
 
     let centavos = parseInt(((preco - valorInteiro)*100));
 
+    
+    if (centavos < 10 && centavos != 0) {
+        centavos = '0'+String(centavos);
+    };
+    if (centavos == 0) {
+        centavos = '00';
+    };
+
     pPreco.textContent = 'R$'+valorInteiro+','+centavos;
     divTextos.appendChild(pPreco);
 
